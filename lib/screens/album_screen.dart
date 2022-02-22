@@ -43,7 +43,7 @@ class AlbumScreen extends HookConsumerWidget {
     return "$min:${sec < 10 ? '0' : ''}$sec";
   }
 
-  Future<void> playSong(List<Song> songs, Song song, AudioPlayer player) async {
+  Future<void> playSong(List<Song> songs, AudioPlayer player, int index) async {
     var children = songs
         .map((s) => AudioSource.uri(
             Uri.parse("$kMusifyHost/musifyserver/stream?k=${s.url}")))
@@ -54,24 +54,16 @@ class AlbumScreen extends HookConsumerWidget {
       // catch load errors: 404, invalid url ...
       print("An error occured $error");
     });
-
-    var i = 0;
-    for (var s in songs) {
-      if (s.url == song.url) {
-        await player.seek(Duration.zero, index: i++);
-        if (player.playing) {
-          await player.stop();
-        }
-        await player.play();
-        break;
-      }
+    await player.seek(Duration.zero, index: index);
+    if (player.playing) {
+      await player.stop();
     }
+    await player.play();
   }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final AudioPlayer player = ref.watch(playerProvider);
-
     final album = ModalRoute.of(context)!.settings.arguments as Album;
 
     return Layout(
@@ -126,7 +118,7 @@ class AlbumScreen extends HookConsumerWidget {
                   ),
                   onTap: () {
                     ref.read(songsProvider.notifier).state = songs;
-                    playSong(songs, song, player);
+                    playSong(songs, player, index);
                     Navigator.pushNamed(context, PlayerScreen.routeName);
                   },
                 );
