@@ -39,6 +39,7 @@ dependencies:
   flutter_hooks: ^0.18.2+1
   riverpod: ^1.0.3
   hooks_riverpod: ^1.0.3
+  audio_video_progress_bar: ^0.10.0
 
 dev_dependencies:
   flutter_test:

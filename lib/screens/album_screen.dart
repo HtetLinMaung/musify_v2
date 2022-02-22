@@ -71,6 +71,7 @@ class AlbumScreen extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final AudioPlayer player = ref.watch(playerProvider);
+
     final album = ModalRoute.of(context)!.settings.arguments as Album;
 
     return Layout(
@@ -124,9 +125,9 @@ class AlbumScreen extends HookConsumerWidget {
                     color: Colors.black,
                   ),
                   onTap: () {
+                    ref.read(songsProvider.notifier).state = songs;
                     playSong(songs, song, player);
-                    Navigator.pushNamed(context, PlayerScreen.routeName,
-                        arguments: song);
+                    Navigator.pushNamed(context, PlayerScreen.routeName);
                   },
                 );
               },
