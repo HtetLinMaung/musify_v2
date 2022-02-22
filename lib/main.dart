@@ -2,8 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:musify/screens/album_screen.dart';
 import 'package:musify/screens/listen_now_screen.dart';
 import 'package:musify/screens/player_screen.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:just_audio/just_audio.dart';
 
-void main() => runApp(const Musify());
+final playerProvider = Provider((_) => AudioPlayer());
+
+void main() => runApp(const ProviderScope(
+      child: Musify(),
+    ));
 
 class Musify extends StatelessWidget {
   const Musify({Key? key}) : super(key: key);

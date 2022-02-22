@@ -1,23 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:just_audio/just_audio.dart';
 import 'package:musify/components/layout.dart';
 import 'package:musify/constants.dart';
+import 'package:musify/main.dart';
 import 'package:musify/models/Song.dart';
 import 'package:musify/models/album.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:musify/screens/player_screen.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../utils/musify_http_client.dart';
 
-class AlbumScreen extends StatefulWidget {
+class AlbumScreen extends HookConsumerWidget {
   static const routeName = 'Album';
 
   const AlbumScreen({Key? key}) : super(key: key);
 
-  @override
-  _AlbumScreenState createState() => _AlbumScreenState();
-}
-
-class _AlbumScreenState extends State<AlbumScreen> {
   Future<List<Song>> fetchSongs(String albumId) async {
     var songRes =
         await MusifyHttpClient.get("/musifyserver/songs?albums=$albumId");
@@ -45,8 +43,34 @@ class _AlbumScreenState extends State<AlbumScreen> {
     return "$min:${sec < 10 ? '0' : ''}$sec";
   }
 
+  Future<void> playSong(List<Song> songs, Song song, AudioPlayer player) async {
+    var children = songs
+        .map((s) => AudioSource.uri(
+            Uri.parse("$kMusifyHost/musifyserver/stream?k=${s.url}")))
+        .toList();
+    await player
+        .setAudioSource(ConcatenatingAudioSource(children: children))
+        .catchError((error) {
+      // catch load errors: 404, invalid url ...
+      print("An error occured $error");
+    });
+
+    var i = 0;
+    for (var s in songs) {
+      if (s.url == song.url) {
+        await player.seek(Duration.zero, index: i++);
+        if (player.playing) {
+          await player.stop();
+        }
+        await player.play();
+        break;
+      }
+    }
+  }
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final AudioPlayer player = ref.watch(playerProvider);
     final album = ModalRoute.of(context)!.settings.arguments as Album;
 
     return Layout(
@@ -100,6 +124,7 @@ class _AlbumScreenState extends State<AlbumScreen> {
                     color: Colors.black,
                   ),
                   onTap: () {
+                    playSong(songs, song, player);
                     Navigator.pushNamed(context, PlayerScreen.routeName,
                         arguments: song);
                   },

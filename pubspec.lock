@@ -104,6 +104,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.4"
+  flutter_riverpod:
+    dependency: transitive
+    description:
+      name: flutter_riverpod
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.3"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -121,6 +128,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.3.1"
+  hooks_riverpod:
+    dependency: "direct main"
+    description:
+      name: hooks_riverpod
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.3"
   http:
     dependency: "direct main"
     description:
@@ -268,6 +282,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.2.4"
+  riverpod:
+    dependency: "direct main"
+    description:
+      name: riverpod
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.3"
   rxdart:
     dependency: transitive
     description:
@@ -294,6 +315,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.10.0"
+  state_notifier:
+    dependency: transitive
+    description:
+      name: state_notifier
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.7.2+1"
   stream_channel:
     dependency: transitive
     description:
