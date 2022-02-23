@@ -8,6 +8,7 @@ import 'package:musify/models/album.dart';
 import 'package:musify/models/category.dart';
 import 'package:musify/screens/album_screen.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:musify/screens/albums_screen.dart';
 
 import '../utils/musify_http_client.dart';
 
@@ -92,12 +93,18 @@ class ListenNowScreen extends HookConsumerWidget {
                         ),
                       ),
                     ),
-                    Text(
-                      'See All',
-                      style: GoogleFonts.poppins(
-                        textStyle: const TextStyle(
-                          fontSize: 16,
-                          color: Color(0xffEA4C89),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pushNamed(context, AlbumsScreen.routeName,
+                            arguments: c);
+                      },
+                      child: Text(
+                        'See All',
+                        style: GoogleFonts.poppins(
+                          textStyle: const TextStyle(
+                            fontSize: 16,
+                            color: Color(0xffEA4C89),
+                          ),
                         ),
                       ),
                     ),
@@ -137,7 +144,7 @@ class ListenNowScreen extends HookConsumerWidget {
                                   image: NetworkImage(album.wallpaper),
                                   fit: BoxFit.cover,
                                 ),
-                                borderRadius: BorderRadius.circular(10),
+                                borderRadius: BorderRadius.circular(20),
                                 boxShadow: [
                                   BoxShadow(
                                     color: Colors.black.withOpacity(0.5),

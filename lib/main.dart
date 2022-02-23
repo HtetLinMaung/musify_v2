@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:musify/models/Song.dart';
 import 'package:musify/screens/album_screen.dart';
+import 'package:musify/screens/albums_screen.dart';
 import 'package:musify/screens/listen_now_screen.dart';
 import 'package:musify/screens/player_screen.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -24,6 +25,7 @@ class Musify extends StatelessWidget {
         ListenNowScreen.routeName: (context) => const ListenNowScreen(),
         AlbumScreen.routeName: (context) => const AlbumScreen(),
         PlayerScreen.routeName: (context) => const PlayerScreen(),
+        AlbumsScreen.routeName: (context) => const AlbumsScreen(),
       },
       initialRoute: ListenNowScreen.routeName,
     );
