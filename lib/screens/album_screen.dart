@@ -114,9 +114,29 @@ class AlbumScreen extends HookConsumerWidget {
                     song.artistName,
                     style: GoogleFonts.varelaRound(),
                   ),
-                  trailing: const Icon(
-                    Icons.more_horiz,
-                    color: Colors.black,
+                  trailing: PopupMenuButton(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    icon: const Icon(
+                      Icons.more_horiz,
+                      color: Colors.black,
+                    ),
+                    itemBuilder: (context) => [
+                      PopupMenuItem(
+                        value: "download",
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Download',
+                              style: GoogleFonts.varelaRound(),
+                            ),
+                            const Icon(Icons.download_rounded)
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
                   onTap: () {
                     ref.read(songsProvider.notifier).state = songs;
