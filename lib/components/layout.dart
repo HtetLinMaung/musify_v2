@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 class Layout extends StatelessWidget {
   final Widget? body;
   final PreferredSizeWidget? appBar;
+  final List<Widget>? persistentFooterButtons;
 
   const Layout({
     Key? key,
     this.body,
     this.appBar,
+    this.persistentFooterButtons,
   }) : super(key: key);
 
   @override
@@ -15,6 +17,7 @@ class Layout extends StatelessWidget {
     return Scaffold(
       appBar: appBar,
       body: body,
+      persistentFooterButtons: persistentFooterButtons,
       bottomNavigationBar: BottomNavigationBar(
         showSelectedLabels: false,
         showUnselectedLabels: false,

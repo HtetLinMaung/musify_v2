@@ -8,6 +8,7 @@ import 'package:just_audio/just_audio.dart';
 
 final playerProvider = Provider((_) => AudioPlayer());
 final songsProvider = StateProvider((_) => <Song>[]);
+final miniPlayerProvider = StateProvider((_) => false);
 
 void main() => runApp(const ProviderScope(
       child: Musify(),

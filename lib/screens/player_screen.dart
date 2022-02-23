@@ -101,13 +101,16 @@ class PlayerScreen extends HookConsumerWidget {
 
     final AudioPlayer player = ref.watch(playerProvider);
     final songs = ref.watch(songsProvider);
-    player.playerStateStream.listen((playerState) {
-      if (player.playing) {
-        _animationController.animateTo(1);
-      } else {
-        _animationController.animateTo(0.5);
-      }
-    });
+    useEffect(() {
+      var sub = player.playerStateStream.listen((playerState) {
+        if (player.playing) {
+          _animationController.animateTo(1);
+        } else {
+          _animationController.animateTo(0.5);
+        }
+      });
+      return () => sub.cancel();
+    }, []);
 
     return Scaffold(
       appBar: AppBar(

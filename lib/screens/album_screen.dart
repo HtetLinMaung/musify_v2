@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:musify/components/layout.dart';
+import 'package:musify/components/mini_player.dart';
 import 'package:musify/constants.dart';
 import 'package:musify/main.dart';
 import 'package:musify/models/Song.dart';
@@ -65,6 +66,7 @@ class AlbumScreen extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final AudioPlayer player = ref.watch(playerProvider);
     final album = ModalRoute.of(context)!.settings.arguments as Album;
+    final miniPlayer = ref.watch(miniPlayerProvider);
 
     return Layout(
       appBar: AppBar(
@@ -118,6 +120,7 @@ class AlbumScreen extends HookConsumerWidget {
                   ),
                   onTap: () {
                     ref.read(songsProvider.notifier).state = songs;
+                    ref.read(miniPlayerProvider.notifier).state = true;
                     playSong(songs, player, index);
                     Navigator.pushNamed(context, PlayerScreen.routeName);
                   },
@@ -133,6 +136,11 @@ class AlbumScreen extends HookConsumerWidget {
           }
         },
       ),
+      persistentFooterButtons: miniPlayer
+          ? [
+              const MiniPlayer(),
+            ]
+          : null,
     );
   }
 }

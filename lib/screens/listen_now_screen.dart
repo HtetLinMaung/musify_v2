@@ -5,19 +5,15 @@ import 'package:musify/constants.dart';
 import 'package:musify/models/album.dart';
 import 'package:musify/models/category.dart';
 import 'package:musify/screens/album_screen.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../utils/musify_http_client.dart';
 
-class ListenNowScreen extends StatefulWidget {
+class ListenNowScreen extends HookConsumerWidget {
   static const routeName = 'ListenNow';
 
   const ListenNowScreen({Key? key}) : super(key: key);
 
-  @override
-  _ListenNowScreenState createState() => _ListenNowScreenState();
-}
-
-class _ListenNowScreenState extends State<ListenNowScreen> {
   Future<List<Category>> fetchData() async {
     var categoryRes = await MusifyHttpClient.get('/musifyserver/categories');
     if (categoryRes['code'] != 200) {
@@ -48,12 +44,7 @@ class _ListenNowScreenState extends State<ListenNowScreen> {
   }
 
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Layout(
       body: FutureBuilder<List<Category>>(
         future: fetchData(),
