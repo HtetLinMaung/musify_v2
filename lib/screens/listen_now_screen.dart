@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:musify/components/layout.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:musify/components/mini_player.dart';
 import 'package:musify/constants.dart';
+import 'package:musify/main.dart';
 import 'package:musify/models/album.dart';
 import 'package:musify/models/category.dart';
 import 'package:musify/screens/album_screen.dart';
@@ -45,6 +47,8 @@ class ListenNowScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final miniPlayer = ref.watch(miniPlayerProvider);
+
     return Layout(
       body: FutureBuilder<List<Category>>(
         future: fetchData(),
@@ -186,6 +190,11 @@ class ListenNowScreen extends HookConsumerWidget {
               itemCount: children.length);
         },
       ),
+      persistentFooterButtons: miniPlayer
+          ? [
+              const MiniPlayer(),
+            ]
+          : null,
     );
   }
 }
